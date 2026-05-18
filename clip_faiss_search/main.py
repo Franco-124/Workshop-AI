@@ -8,18 +8,18 @@ config = Config()
 searcher = ImageSearcher(config)
 
 
-def search_by_text(query: str) -> list[str]:
+def search_by_text(query: str) -> list[tuple[str, str]]:
     if not query or not query.strip():
         return []
     results = searcher.search_by_text(query)
-    return [path for path, score in results]
+    return [(path, f"Score: {score:.4f}") for path, score in results]
 
 
-def search_by_image(image: Image.Image) -> list[str]:
+def search_by_image(image: Image.Image) -> list[tuple[str, str]]:
     if image is None:
         return []
     results = searcher.search_by_image(image)
-    return [path for path, score in results]
+    return [(path, f"Score: {score:.4f}") for path, score in results]
 
 
 with gr.Blocks(title="Búsqueda visual con CLIP + FAISS") as demo:
